@@ -60,7 +60,7 @@ async function downloadAllFlags() {
         const raw = await fs.readFile(PLAYERS_PATH, "utf8");
         const players = JSON.parse(raw);
 
-        // Obtener nacionalidades únicas
+        // Obtain nationalities
         const countries = getNationalities(players);
         console.log(`Found ${countries.length} unique countries`);
 

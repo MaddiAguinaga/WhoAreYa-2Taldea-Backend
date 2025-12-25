@@ -1,57 +1,47 @@
-import fs from "fs/promises";
-import fsSync from "fs";
+import fs from "fs";
+import fsPromises from "fs/promises";
 import path from "path";
 import fetch from "node-fetch";
 import { fileURLToPath } from "url";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const OUTPUT_DIR = path.join(__dirname, "../src/public/images/leagues");
-const LEAGUES_FILE = path.join(__dirname, "../src/public/txt/leagues.txt");
-const BASE_URL = "https://playfootball.games/media/competitions";
+const writepath = path.join(__dirname, "../src/public/images/leagues");
+const leaguesFile = path.join(__dirname, "../src/public/txt/leagues.txt");
 
-async function downloadLeagueLogos() {
-    try {
-        await fs.mkdir(OUTPUT_DIR, { recursive: true });
+try {
+    await fsPromises.mkdir(writepath, { recursive: true });
 
-        // Leer leagues.txt
-        const content = await fs.readFile(LEAGUES_FILE, "utf8");
-        const leagues = content
-            .replace(/^\uFEFF/, "")
-            .split("\n")
-            .map(l => l.trim())
-            .filter(l => l.length > 0);
+    // Read leagues.txt
+    const content = await fsPromises.readFile(leaguesFile, "utf8");
+    const data = content
+        .replace(/^\uFEFF/, "")
+        .split("\n")
+        .map(l => l.trim())
+        .filter(l => l.length > 0);
 
-        for (const [idx, league] of leagues.entries()) {
-            const url = `${BASE_URL}/${league}.png`;
-            const outputPath = path.join(OUTPUT_DIR, `${league}.png`);
+    data.forEach((elem, idx) => {
+        const url = `https://playfootball.games/media/competitions/${elem}.png`;
 
-            try {
-                const res = await fetch(url, {
-                    headers: {
-                        "User-Agent": "Mozilla/5.0",
-                        "Accept": "image/png"
-                    }
-                });
-
-                if (!res.ok) {
-                    console.log(`status: ${res.status} line: ${idx} league: ${league} not found`);
-                    continue;
-                }
-
-                const buffer = Buffer.from(await res.arrayBuffer());
-                await fs.writeFile(outputPath, buffer);
-                console.log(`Downloaded: ${league}.png`);
-            } catch (err) {
-                console.error(`Error downloading ${league}:`, err.message);
+        fetch(url, {
+            headers: {
+                "User-Agent": "Mozilla/5.0",
+                "Accept": "image/png"
             }
-        }
-
-        console.log("Download of league logos completed.");
-    } catch (err) {
-        console.error("General error:", err);
-    }
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    const fileStream = fs.createWriteStream(path.join(writepath, `${elem}.png`));
+                    res.body.pipe(fileStream);
+                    console.log(`Downloaded: ${elem}.png`);
+                } else {
+                    console.log(`status: ${res.status} line: ${idx} league: ${elem} not found`);
+                }
+            })
+            .catch(err => console.log(`Error downloading ${elem}:`, err.message));
+    });
+} catch (err) {
+    console.error("General error:", err);
 }
-
-export {downloadLeagueLogos };
