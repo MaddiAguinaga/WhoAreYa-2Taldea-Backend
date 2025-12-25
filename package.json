@@ -1,0 +1,24 @@
+{
+  "name": "whoareya-2taldea-backend",
+  "version": "1.0.0",
+  "description": "Milestone 0-ren helburua **Who Are Ya?** aplikazioaren backend-aren arkitektura definitzea da, inplementazioa hasi aurretik erabaki nagusiak argi uzteko eta ondorengo mugarriak modu koherentean garatu ahal izateko.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaddiAguinaga/WhoAreYa-2Taldea-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaddiAguinaga/WhoAreYa-2Taldea-Backend/issues"
+  },
+  "homepage": "https://github.com/MaddiAguinaga/WhoAreYa-2Taldea-Backend#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
