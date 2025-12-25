@@ -1,38 +1,25 @@
 
-
-import fs from "fs";
-import { promises as fsp } from "fs";
+import fs from "fs/promises";
+import fsSync from "fs";
 import path from "path";
+import fetch from "node-fetch";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const PLAYERS_PATH = path.join(
-    process.cwd(),
-    "src",
-    "public",
-    "json",
-    "fullplayers25.json"
-);
-
-const FLAGS_DIR = path.join(
-    process.cwd(),
-    "src",
-    "public",
-    "images",
-    "flags"
-);
+const PLAYERS_PATH = path.join(__dirname, "../src/public/json/fullplayers25.json");
+const FLAGS_DIR = path.join(__dirname, "../src/public/images/flags");
+const BASE_URL = "https://playfootball.games/media/nations";
 
 /**
  * Extracts unique nationalities from players list
  */
 function getNationalities(players) {
     const set = new Set();
-
     for (const p of players) {
-        if (p && p.nationality) {
-            set.add(p.nationality.trim());
-        }
+        if (p?.nationality) set.add(p.nationality.trim());
     }
-
     return [...set].sort();
 }
 
@@ -40,61 +27,57 @@ function getNationalities(players) {
  * Downloads a single flag and stores it locally
  */
 async function downloadFlag(country, outPath) {
-    const encodedCountry = encodeURIComponent(country);
-    const url = `https://playfootball.games/media/nations/${encodedCountry}.svg`;
+    try {
+        const encodedCountry = encodeURIComponent(country);
+        const url = `${BASE_URL}/${encodedCountry}.svg`;
 
-    const res = await fetch(url);
+        const res = await fetch(url, {
+            headers: { "User-Agent": "Mozilla/5.0" }
+        });
 
-    if (res.status !== 200) {
-        console.log(`status: ${res.status} country: ${country} not found`);
-        return;
+        if (!res.ok) {
+            console.log(`status: ${res.status} country: ${country} not found`);
+            return;
+        }
+
+        const buffer = Buffer.from(await res.arrayBuffer());
+        await fs.writeFile(outPath, buffer);
+        console.log(`Downloaded: ${country}`);
+    } catch (err) {
+        console.error(`Error downloading ${country}:`, err.message);
     }
-
-    // Node 18+ fetch -> Web Stream
-    const buffer = Buffer.from(await res.arrayBuffer());
-    await fsp.writeFile(outPath, buffer);
-
-    console.log(`OK: ${country}`);
 }
 
 /**
- * Main execution
+ * Main function to download all flags
  */
-async function main() {
+async function downloadAllFlags() {
     try {
-        // 1) Create output directory if it does not exist
-        await fsp.mkdir(FLAGS_DIR, { recursive: true });
+        // Create folder if it does not exist
+        await fs.mkdir(FLAGS_DIR, { recursive: true });
 
-        // 2) Read players JSON
-        const raw = await fsp.readFile(PLAYERS_PATH, "utf8");
+        // Read json
+        const raw = await fs.readFile(PLAYERS_PATH, "utf8");
         const players = JSON.parse(raw);
 
-        // 3) Get unique nationalities
+        // Obtener nacionalidades únicas
         const countries = getNationalities(players);
         console.log(`Found ${countries.length} unique countries`);
 
-        // 4) Download flags
+        // Download flags
         for (const country of countries) {
             const outPath = path.join(FLAGS_DIR, `${country}.svg`);
 
-            // Skip if already downloaded
-            if (fs.existsSync(outPath)) continue;
+            // Skip if it exists
+            if (fsSync.existsSync(outPath)) continue;
 
-            try {
-                await downloadFlag(country, outPath);
-            } catch (err) {
-                console.log(
-                    `Error downloading ${country}:`,
-                    err?.message ?? err
-                );
-            }
+            await downloadFlag(country, outPath);
         }
 
-        console.log("Done.");
+        console.log("All flags downloaded successfully.");
     } catch (err) {
         console.error("Fatal error:", err);
     }
 }
 
-// Run script
-main();
+export {downloadAllFlags};

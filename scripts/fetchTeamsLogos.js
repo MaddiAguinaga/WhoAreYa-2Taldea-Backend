@@ -1,20 +1,28 @@
 import fs from "fs/promises";
 import fsSync from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import fetch from "node-fetch";
 
-const OUTPUT_DIR = path.join("public", "images", "teams");
-const TEAM_IDS_FILE = path.join(__dirname, "../public/json/txt/teamIDs.txt");
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+const OUTPUT_DIR = path.join(__dirname, "../src/public/images/teams");
+const TEAM_IDS_FILE = path.join(__dirname, "../src/public/txt/teamIDs.txt");
 const BASE_URL = "https://cdn.sportmonks.com/images/soccer/teams";
 
 async function downloadTeamLogos() {
   try {
-    // Helburu karpeta sortu (existitzen ez bada)
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
-    // teamIDs.txt irakurri
     const content = await fs.readFile(TEAM_IDS_FILE, "utf8");
-    const teamIds = content.split("\n").filter(Boolean);
+    const teamIds = content
+        .replace(/^\uFEFF/, "")
+        .split("\n")
+        .map(id => id.replace(/[^\d]/g, "").trim())
+        .filter(id => id.length > 0);
 
     for (const teamId of teamIds) {
       const dir = Number(teamId) % 32;
@@ -22,29 +30,31 @@ async function downloadTeamLogos() {
       const outputPath = path.join(OUTPUT_DIR, `${teamId}.png`);
 
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: {
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "image/png"
+          }
+        });
 
         if (!res.ok) {
           console.log(`${teamId} -> HTTP ${res.status}`);
           continue;
         }
 
-        const fileStream = fsSync.createWriteStream(outputPath);
-        res.body.pipe(fileStream);
+        const buffer = Buffer.from(await res.arrayBuffer());
+        await fs.writeFile(outputPath, buffer);
 
-        await new Promise((resolve, reject) => {
-          fileStream.on("finish", resolve);
-          fileStream.on("error", reject);
-        });
-
-        console.log(` Deskargatua: ${teamId}.png`);
+        console.log(`Downloaded: ${teamId}.png`);
       } catch (err) {
-        console.error(`Errorea ${teamId}-rekin:`, err.message);
+        console.error(`Error with ${teamId}:`, err.message);
       }
     }
+
+    console.log("Download of team logos completed.");
   } catch (err) {
-    console.error("Errore orokorra:", err);
+    console.error("General error:", err);
   }
 }
 
-module.exports = { downloadTeamLogos };
+export { downloadTeamLogos };
