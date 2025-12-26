@@ -12,8 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(process.cwd(), "src", "public")));
 
 // Proba route
+
 app.get("/", (req, res) => {
-    res.send("WhoAreYa Backend is running");
+   res.send("WhoAreYa Backend is running");
 });
+
+
+
 
 export default app;
