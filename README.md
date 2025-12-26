@@ -1,4 +1,4 @@
-# WhoAreYa - Milestone 0: Arkitekturaren diseinua
+# WhoAreYa - Milestone 0: Arkitekturaren diseinua (Eguneratua Milestone 1-rako)
 Milestone 0-ren helburua **Who Are Ya?** aplikazioaren backend-aren arkitektura definitzea da, inplementazioa hasi aurretik erabaki nagusiak argi uzteko eta ondorengo mugarriak modu koherentean garatu ahal izateko.
 
 ## Proiektuaren egitura
