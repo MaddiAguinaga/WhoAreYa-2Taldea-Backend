@@ -9,3 +9,5 @@
 /dataSources.local.xml
 # Downloaded images
 src/public/images/
+# ignore node_modules
+node_modules/
