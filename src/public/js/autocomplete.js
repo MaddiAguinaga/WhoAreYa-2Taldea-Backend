@@ -40,7 +40,7 @@ function autocomplete(inp, game) {
 
             b = document.createElement("DIV");
             b.classList.add('flex', 'items-start', 'gap-x-3', 'leading-tight', 'uppercase', 'text-sm');
-            b.innerHTML = `<img src="https://cdn.sportmonks.com/images/soccer/teams/${p.teamId % 32}/${p.teamId}.png"  width="28" height="28">`;
+            b.innerHTML = `<img src="/images/teams/${p.teamId}.png"  width="28" height="28">`;
 
             // Bilatutako zatia non dagoen kalkulatu
             const idx = p.name.toLowerCase().indexOf(val.toLowerCase());

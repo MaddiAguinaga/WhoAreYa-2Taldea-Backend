@@ -67,7 +67,7 @@ Promise.all([fetchJSON("./json/fullplayers25.json"), fetchJSON("./json/solution2
         game.solution = getSolution(game.players, solution, difference_In_Days);
 
         // irudia eguneratu
-        document.getElementById("mistery").src = `https://playfootball.games/media/players/${Number(game.solution.id) % 32}/${game.solution.id}.png`;
+        document.getElementById("mistery").src = `/images/players/${game.solution.id}.png`;
 
         const myInput = document.getElementById("myInput");
         let addRow = setupRows(game);

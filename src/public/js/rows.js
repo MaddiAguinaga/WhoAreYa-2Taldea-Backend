@@ -148,9 +148,9 @@ let setupRows = function (game) {
         }
 
         return [
-            `<img src="https://playfootball.games/media/nations/${guess.nationality.toLowerCase()}.svg" alt="" style="width: 60%;">`,
-            `<img src="https://playfootball.games/media/competitions/${leagueToFlag(guess.leagueId)}.png" alt="" style="width: 60%;">`,
-            `<img src="https://cdn.sportmonks.com/images/soccer/teams/${guess.teamId % 32}/${guess.teamId}.png" alt="" style="width: 60%;">`,
+            `<img src="/images/flags/${guess.nationality}.svg" alt="" style="width: 60%;">`,
+            `<img src="/images/leagues/${leagueToFlag(guess.leagueId)}.png" alt="" style="width: 60%;">`,
+            `<img src="/images/teams/${guess.teamId}.png" alt="" style="width: 60%;">`,
             `${guess.position}`,
             ageDisplay
         ];

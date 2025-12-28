@@ -11,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 // Static files
 app.use(express.static(path.join(process.cwd(), "src", "public")));
 
+
+
 // Proba route
 
 app.get("/", (req, res) => {
