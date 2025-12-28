@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
+    "express": "^5.2.1",
     "node-fetch": "^3.3.2",
     "p-limit": "^7.2.0"
   }
