@@ -1,43 +1,30 @@
 let initState = function(what, solutionId) {
 
+    // YOUR CODE HERE
+
+    // localstorage-etik lortu objektua
     let obj = localStorage.getItem(what);
     let state;
 
-    if (obj) {
+    if (obj) { // objektua existitzen bada, parseatu
         state = JSON.parse(obj);
-    } else {
+    } else { // objektua ez bada existitzen, sortu objektu berria guesses hutsik jarriz
         state = {
             solution: solutionId,
-            guesses: [],
-            finished: false   // nueva propiedad para saber si terminó
+            guesses: []
         };
+
+        // localStorage-en gorde
         localStorage.setItem(what, JSON.stringify(state));
     }
 
-    // Guardar un guess en state y localStorage
+    // Guess berriak gorde eta localStorage-n eguneratzeko funtzioa
     let addGuess = function (guess) {
-        state.guesses.push(guess);
-        localStorage.setItem(what, JSON.stringify(state));
+        localStorage.setItem(what, JSON.stringify(state));  // localStorage eguneratu
     };
 
-    // Marcar partida como terminada
-    let finishGame = function() {
-        state.finished = true;
-        localStorage.setItem(what, JSON.stringify(state));
-    };
-
-    // Reiniciar partida (opcional)
-    let resetState = function(newSolutionId) {
-        state = {
-            solution: newSolutionId,
-            guesses: [],
-            finished: false
-        };
-        localStorage.setItem(what, JSON.stringify(state));
-        return state;
-    }
-
-    return [state, addGuess, finishGame, resetState];
+    // Bi baloreko array-a bueltatu [state, funtzioa]
+    return [state, addGuess];
 }
 
 

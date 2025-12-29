@@ -13,7 +13,7 @@ const attribs = ['nationality', 'leagueId', 'teamId', 'position', 'birthdate']
 
 
 let setupRows = function (game) {
-    const [state, addGuess, finishGame, resetState] = initState("WAYgameState", game.solution.id);
+    const [state, updateState] = initState("WAYgameState", game.solution.id);
     game.guesses = state.guesses;
 
 
@@ -228,7 +228,7 @@ let setupRows = function (game) {
         showStats(0)
     }
 
-    //game.guesses = []
+    game.guesses = []
     resetInput();
 
     return /* addRow */ function (playerId) {
@@ -237,24 +237,20 @@ let setupRows = function (game) {
         console.log(guess)
 
         let content = setContent(guess)
-        showContent(content, guess)
 
-        game.guesses.push(playerId);
-        addGuess(playerId);
+        game.guesses.push(playerId)
+        updateState(playerId)
 
         resetInput();
 
         if (gameEnded(playerId)) {
             updateStats(game.guesses.length, playerId == game.solution.id);
 
-            finishGame();
-
             if (playerId == game.solution.id) {
                 success();
             } else {
                 gameOver();
             }
-
 
             let interval = /* YOUR CODE HERE */ setInterval(() => {
 
@@ -286,37 +282,7 @@ let setupRows = function (game) {
 
         }
 
-        // Mostrar guesses previos al cargar
-        if (game.guesses.length > 0) {
-            game.guesses.forEach(id => {
-                const g = getPlayer(id);
-                if (g) showContent(setContent(g), g);
-            });
-        }
-
-        // Mostrar botón para nueva partida si terminó
-        if (state.finished) {
-            console.log("Partida bukatua");
-            // Botón de nueva partida
-            if (!document.getElementById('newGameBtn')) {
-                const newBtn = document.createElement("button");
-                newBtn.id = 'newGameBtn';
-                newBtn.textContent = "Nueva partida";
-                newBtn.onclick = () => {
-                    const newId = getRandomPlayerId();
-                    game.solution.id = newId;
-                    game.guesses = [];
-                    resetState(newId);
-                    document.getElementById('players').innerHTML = '';
-                    resetInput();
-                    newBtn.remove(); // eliminar botón al iniciar nueva partida
-                };
-                document.body.appendChild(newBtn);
-            }
-
-        }
-
-
+        showContent(content, guess)
 
     }
 
