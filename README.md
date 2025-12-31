@@ -1,7 +1,13 @@
 # WhoAreYa - Arkitekturaren diseinua 
+
+## Hasieraketa
+Proiektuaren hasieraketa, behin dependentzia guztiak instalatuta daudela, hurrengo komandoaren bidez egingo da: `npm start`
+
+## Milestone 0: erabakiak
 Milestone 0-ren helburua **Who Are Ya?** aplikazioaren backend-aren arkitektura definitzea da, inplementazioa hasi aurretik erabaki nagusiak argi uzteko eta ondorengo mugarriak modu koherentean garatu ahal izateko.
 
 ## Proiektuaren egitura
+
 #### Hautatutako aukera: Egitura modularra (B aukera)
 Egitura modularra aukeratu da Express Generator-ek eskaintzen duen egitura tradizionalarekin alderatuta kodearen antolaketa argiagoa, eskalagarriagoa eta mantengarriagoa eskaintzen duelako. Backend-a `src/` direktorioaren barruan antolatzeak ardura banaketa egokia bermatzen du, eta horrek funtzionalitate berriak pixkanaka gehitzea eta moduluak modu independentean garatzea ahalbidetzen du. Gainera, egitura honek taldeko lana paraleloan egitea errazten du eta egungo backend modernoetan erabiltzen diren antolaketa-patroiekin bat dator, autentifikazioa, middlewareak eta CRUD eragiketak modu ordenatuan inplementatzeko egokia izanik.
 
