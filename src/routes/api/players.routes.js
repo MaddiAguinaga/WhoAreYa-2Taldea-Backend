@@ -1,0 +1,17 @@
+import express from "express";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
+import { isAdmin } from "../middlewares/admin.middleware.js";
+
+const router = express.Router();
+
+// Autentifikatuta dagoen edozeinek
+router.get("/", isAuthenticated, (req, res) => {
+    res.json({ message: "Jokalariak ikusteko baimena" });
+});
+
+// Admin bakarrik
+router.post("/", isAuthenticated, isAdmin, (req, res) => {
+    res.json({ message: "Jokalaria sortua (admin bakarrik)" });
+});
+
+export default router;

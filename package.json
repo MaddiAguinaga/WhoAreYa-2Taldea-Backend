@@ -2,9 +2,14 @@
   "name": "WhoAreYa-2Taldea-Backend",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "mongoose": "^9.0.2",
     "moongose": "^1.0.0",
     "node-fetch": "^3.3.2",
     "p-limit": "^7.2.0"
