@@ -29,4 +29,10 @@ app.get("/", (req, res) => {
    res.send("WhoAreYa Backend is running");
 });
 
+// Ez bada route bilatu
+app.use((req, res) => {
+    res.status(404).json({ message: "Baliabidea ez da aurkitu" });
+});
+
+
 export default app;
