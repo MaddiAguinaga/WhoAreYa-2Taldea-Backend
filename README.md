@@ -1,4 +1,4 @@
-# WhoAreYa - Milestone 0: Arkitekturaren diseinua 
+# WhoAreYa - Arkitekturaren diseinua 
 Milestone 0-ren helburua **Who Are Ya?** aplikazioaren backend-aren arkitektura definitzea da, inplementazioa hasi aurretik erabaki nagusiak argi uzteko eta ondorengo mugarriak modu koherentean garatu ahal izateko.
 
 ## Proiektuaren egitura
@@ -21,6 +21,8 @@ WhoAreYa-2Taldea-Backend/
     └── fetchFlags.js
     └── fetchLeagues.js
     └── fetchTeamsLogos.js
+    └── seed.js
+    
 └── src/
     ├── app.js
     ├── server.js 

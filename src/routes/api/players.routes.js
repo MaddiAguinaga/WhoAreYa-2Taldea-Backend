@@ -1,6 +1,6 @@
 import express from "express";
-import { isAuthenticated } from "../middlewares/auth.middleware.js";
-import { isAdmin } from "../middlewares/admin.middleware.js";
+import { isAuthenticated } from "../../middlewares/auth.middleware.js";
+import { authorizeAdmin } from "../../middlewares/role.middleware.js";
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get("/", isAuthenticated, (req, res) => {
 });
 
 // Admin bakarrik
-router.post("/", isAuthenticated, isAdmin, (req, res) => {
+router.post("/", isAuthenticated, authorizeAdmin, (req, res) => {
     res.json({ message: "Jokalaria sortua (admin bakarrik)" });
 });
 
