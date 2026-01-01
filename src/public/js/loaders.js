@@ -1,15 +1,28 @@
-export { fetchJSON };
+// loaders.js - BACKEND BERTSIOA
+export { fetchJSON, fetchPlayer, fetchSolution };
+const API_URL = 'http://localhost:3000/api';
 
 async function fetchJSON(what) {
-    if (!what) throw new Error('fetchJSON: "what" parametroa falta da');
-    try {
-        const res = await fetch(what);
-        if (!res.ok) throw new Error(`fetchJSON: HTTP ${res.status} ${res.statusText}`);
-        return await res.json();
-    } catch (err) {
-        console.error('fetchJSON error:', err);
-        throw err;
+    // Orain backend-era deitzen du, fitxategi estatikoen ordez
+    let endpoint;
+
+    if (what === 'fullplayers25') {
+        endpoint = `${API_URL}/players`;
     }
 
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+}
 
+async function fetchPlayer(playerId) {
+    const response = await fetch(`${API_URL}/players/${playerId}`);
+    return await response.json();
+}
+
+async function fetchSolution(gameNumber) {
+    const response = await fetch(`${API_URL}/players/solution/${gameNumber}`);
+    return await response.json();
 }
