@@ -12,20 +12,43 @@ HTTP Codes:
 500 Internal Server Error
 */
 
-// Jokalari guztiak zerrendatzen dira, orrialde-banaketarekin
+// GET /api/players
+// query params gabe --> Auto-osaketarako, jokalari guztiak bueltatu [6.5]
 // GET /api/players?page=1&limit=10
+// query params-en page eta limit badaude --> Orrialde-banaketa [6.1]
+// Jokalari guztiak zerrendatzen dira, orrialde-banaketarekin
 export const getPlayers = async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const skip = (page - 1) * limit;
 
-        const players = await Player.find().skip(skip).limit(limit);
+        const { page, limit } = req.query;
+
+        // Auto-osaketarako [6.5]
+        if (!page && !limit) {
+            const players = await Player.find();
+
+            return res.status(200).json({
+                success: true,
+                data: players,
+                message: "Jokalari guztiak lortu dira (jokorako)"
+            });
+        }
+
+        // orrialde-banaketa [6.1]
+        const pageNum = parseInt(page) || 1;
+        const limitNum = parseInt(limit) || 10;
+        const skip = (pageNum - 1) * limitNum;
+
+        const players = await Player.find().skip(skip).limit(limitNum);
         const total = await Player.countDocuments();
 
         res.status(200).json({
             success: true,
-            data: { page, limit, total, players },
+            data: {
+                page: pageNum,
+                limit: limitNum,
+                total,
+                players
+            },
             message: "Jokalariak arrakastaz lortu dira"
         });
     } catch (error) {
@@ -190,6 +213,54 @@ export const deletePlayer = async (req, res) => {
             error: {
                 code: "VALIDATION_ERROR",
                 message: "ID baliogabea"
+            }
+        });
+    }
+};
+
+
+// GET /api/solution/:gameNumber
+export const getDailySolution = async (req, res) => {
+    try {
+        const gameNumber = parseInt(req.params.gameNumber);
+
+        if (isNaN(gameNumber)) {
+            return res.status(400).json({
+                success: false,
+                error: {
+                    code: "INVALID_GAME_NUMBER",
+                    message: "Game number baliogabea"
+                }
+            });
+        }
+
+        const players = await Player.find();
+
+        if (players.length === 0) {
+            return res.status(404).json({
+                success: false,
+                error: {
+                    code: "NO_PLAYERS",
+                    message: "Ez dago jokalaririk datu-basean"
+                }
+            });
+        }
+
+        const index = gameNumber % players.length;
+        const solution = players[index];
+
+        res.status(200).json({
+            success: true,
+            data: solution,
+            message: "Eguneko jokalaria lortu da"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: {
+                code: "INTERNAL_ERROR",
+                message: "Zerbitzariaren errorea"
             }
         });
     }

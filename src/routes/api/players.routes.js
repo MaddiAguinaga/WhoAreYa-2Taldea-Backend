@@ -5,7 +5,8 @@ import {
     getPlayerById,
     createPlayer,
     updatePlayer,
-    deletePlayer
+    deletePlayer,
+    getDailySolution
 } from "../../controllers/players.controller.js";
 
 import { isAuthenticated } from "../../middlewares/auth.middleware.js";
@@ -14,6 +15,9 @@ import { authorizeAdmin } from "../../middlewares/role.middleware.js";
 const router = express.Router();
 
 /* ========= READ (PUBLIC, LOGIN GABE) ========= */
+
+// GET /api/players/solution/:gameNumber
+router.get("/solution/:gameNumber", getDailySolution);
 
 // GET /api/players
 router.get("/", getPlayers);
