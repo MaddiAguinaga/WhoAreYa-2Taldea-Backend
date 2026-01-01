@@ -3,6 +3,8 @@ import path from "path";
 import session from "express-session";
 import authRoutes from "./routes/api/auth.routes.js";
 import playersRoutes from "./routes/api/players.routes.js";
+import teamsRoutes from "./routes/api/teams.routes.js";
+import leaguesRoutes from "./routes/api/leagues.routes.js";
 
 const app = express();
 
@@ -27,6 +29,12 @@ app.use("/api/auth", authRoutes);
 
 // PLAYERS ROUTES
 app.use("/api/players", playersRoutes);
+
+// TEAMS ROUTES
+app.use("/api/teams", teamsRoutes);
+
+// LEAGUES ROUTES
+app.use("/api/leagues", leaguesRoutes);
 
 // Proba route
 app.get("/", (req, res) => {
