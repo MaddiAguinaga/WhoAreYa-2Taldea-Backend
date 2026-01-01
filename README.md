@@ -15,11 +15,11 @@ Egitura modularra aukeratu da Express Generator-ek eskaintzen duen egitura tradi
 #### Hautatutako aukera: server.js (B aukera)
 Zerbitzariaren sarrera-puntu gisa `server.js` hautatu da, aplikazioaren konfigurazioa (`app.js`) eta zerbitzariaren abiaraztea modu argian bereiztea ahalbidetzen duelako, baina fitxategi kopuru gehiegirik sortu gabe. Aukera hau egokiagoa da konfigurazioa eta exekuzioa fitxategi berean bateratzen dituen aukera baino, azken horrek kodearen hazkundea eta testagarritasuna zailtzen baititu. Gainera, `bin/www` bezalako egitura tradizionalek baino sinpleagoa eta ulergarriagoa egiten da, batez ere proiektuaren hasierako faseetan.
 
-## Karpeta antolaketa (Eguneratuta Milestone 1-ren ondoren)
+## Karpeta antolaketa 
 #### Hautatutako aukera: Egitura hibridoa (C aukera)
 Karpeta-antolaketarako egitura hibridoa hautatu da, motaren araberako karpeten eta domeinuaren araberako banaketaren arteko oreka egokia eskaintzen duelako. Alde batetik, elementu orokorrak (`models`, `config`, `middlewares`) leku bakarrean zentralizatzea ahalbidetzen du, eta bestetik, domeinu bakoitzaren logika modu isolatuan antolatzea errazten du, egitura soilik motaren araberakoa edo soilik domeinuaren araberakoa erabiltzeak sor ditzakeen mugak saihestuz. Horri esker, APIaren logika argi bereizten da eta administrazio-panelaren integrazioa modu eraginkorrean planifika daiteke.
 
-Honako hau da Milestone 1 egin ondoren lortzen den karpeta-zuhaitza: 
+Honako hau da karpeta-zuhaitza: 
 ```
 WhoAreYa-2Taldea-Backend/
 └── scripts/
@@ -52,17 +52,21 @@ WhoAreYa-2Taldea-Backend/
 Konfigurazio zentralizatua hautatu da, ingurune-aldagaiak `.env` fitxategitik kargatu eta `src/config/index.js` fitxategian bateratzeko aukera ematen duelako, `process.env` aldagaien erabilera sakabanatuak sor ditzakeen arazoak saihestuz. Estrategia honek segurtasuna hobetzen du, konfigurazio sentikorra kode nagusitik bereizten duelako, eta hainbat ingurune (garapena, ekoizpena eta testak) modu erraz eta koherentean kudeatzeko aukera ematen duelako, aldagaiak baliozkotuz eta lehenetsitako balioak definituz.
 
 ## Sistemaren ibilbideak
-Aplikazioaren ibilbide nagusiak aurrez definitu dira, programazioa hasi aurretik APIaren egitura orokorra argi uzteko eta lan-talde osoak ikuspegi komun bat izan dezan. Hasierako plangintzan hiru maila nagusi bereizten dira: `/api/*` API RESTerako, JSON bidezko komunikazioa erabiliz; `/admin/*` administrazio-panelerako, admin rola behar duena; eta `/`, jokoaren atal publikorako. Plangintza orokor honek malgutasuna mantentzen du, endpoint zehatzak hurrengo mugarrietan definitu eta inplementatzeko aukera emanez.
-Orain arte honako ibilbideak aurreikusten dira: 
+Aplikazioaren ibilbide nagusiak dagoeneko inplementatuta daude, APIaren egitura argi eta koherente bat eskainiz. Ibilbide hauek proiektuaren egungo egoera islatzen dute, eta REST arkitekturaren printzipioak jarraituz antolatu dira. Hiru maila nagusi bereizten dira: /api/* API RESTerako, JSON bidezko komunikazioa erabiliz; /admin/* administrazio-panelerako, admin rola duten erabiltzaileentzat soilik eskuragarria; eta /, jokoaren atal publikorako. Egitura honek aplikazioaren funtzionaltasun nagusiak bereiztea ahalbidetzen du, segurtasuna eta mantentze-lanak erraztuz.
+Une honetan, honako ibilbideak daude erabilgarri:
 
-| Mota | Metodoa | Endpoint            | Deskribapena                         | Baimena |
-|-----|---------|---------------------|--------------------------------------|---------|
-| API | GET     | /api/players        | Jokalarien zerrenda lortzea           | Publikoa |
-| API | POST    | /api/auth/login     | Erabiltzailearen saioa hastea         | Publikoa |
-| API | POST    | /api/auth/register  | Erabiltzaile berria sortzea           | Publikoa |
-| WEB | GET     | /admin              | Administrazio-panela                  | Admin |
-| WEB | GET     | /                   | Jokoaren hasierako orria              | Publikoa |
 
+| Mota | Metodoa | Endpoint           | Deskribapena                                         | Baimena  |
+| ---- | ------- | ------------------ | ---------------------------------------------------- | -------- |
+| API  | GET     | /api/players       | Jokalarien zerrenda lortzea (orrialde-banaketarekin) | Publikoa |
+| API  | GET     | /api/players/:id   | IDaren araberako jokalari baten informazioa lortzea  | Publikoa |
+| API  | POST    | /api/players       | Jokalari berri bat sortzea                           | Admin    |
+| API  | PUT     | /api/players/:id   | Jokalari baten datu guztiak eguneratzea              | Admin    |
+| API  | DELETE  | /api/players/:id   | Jokalari bat ezabatzea                               | Admin    |
+| API  | POST    | /api/auth/login    | Erabiltzailearen saioa hastea                        | Publikoa |
+| API  | POST    | /api/auth/register | Erabiltzaile berria sortzea                          | Publikoa |
+| WEB  | GET     | /admin             | Administrazio-panela                                 | Admin    |
+| WEB  | GET     | /                  | Jokoaren hasierako orria                             | Publikoa |
 
 
 
