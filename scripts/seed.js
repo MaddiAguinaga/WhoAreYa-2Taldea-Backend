@@ -2,10 +2,14 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import fs from "fs/promises";
 import path from "path";
+import bcrypt from "bcrypt";
+
+
 
 import Player from "../src/models/Player.js";
 import Team from "../src/models/Team.js";
 import League from "../src/models/League.js";
+import User from "../src/models/User.js";
 
 dotenv.config();
 
@@ -23,6 +27,24 @@ const seedDatabase = async () => {
         await Player.deleteMany();
         await Team.deleteMany();
         await League.deleteMany();
+        await User.deleteMany();
+        // =======================
+        // ADMIN USER
+        // =======================
+        const adminPassword = await bcrypt.hash("123456", 10);
+
+        await User.insertMany([{
+            name: "Admin",
+            lastName: "Seed",
+            email: "admin@whoareya.com",
+            password: adminPassword,
+            role: "admin"
+        }]);
+
+
+        console.log("Admin erabiltzailea sortua");
+
+
 
         // Jokalarien bilduma datuekin bete
         playersData.forEach(p => {

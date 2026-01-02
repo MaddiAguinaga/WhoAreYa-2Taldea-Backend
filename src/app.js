@@ -5,6 +5,8 @@ import authRoutes from "./routes/api/auth.routes.js";
 import playersRoutes from "./routes/api/players.routes.js";
 import teamsRoutes from "./routes/api/teams.routes.js";
 import leaguesRoutes from "./routes/api/leagues.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
+
 
 const app = express();
 
@@ -12,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// SESSION (oso sinplea, milestone-rako nahikoa)
+// SESSION
 app.use(
     session({
        secret: "secret",
@@ -23,6 +25,11 @@ app.use(
 
 // Static files
 app.use(express.static(path.join(process.cwd(), "src", "public")));
+
+// View engine (EJS)
+app.set("view engine", "ejs");
+app.set("views", path.join(process.cwd(), "src", "views"));
+
 
 // AUTH ROUTES
 app.use("/api/auth", authRoutes);
@@ -35,6 +42,9 @@ app.use("/api/teams", teamsRoutes);
 
 // LEAGUES ROUTES
 app.use("/api/leagues", leaguesRoutes);
+
+app.use("/admin", adminRoutes);
+
 
 // Proba route
 app.get("/", (req, res) => {
@@ -51,3 +61,4 @@ app.use((req, res) => {
 
 
 export default app;
+

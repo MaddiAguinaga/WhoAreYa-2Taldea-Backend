@@ -110,33 +110,40 @@ export const createPlayer = async (req, res) => {
     }
 
     try {
-        const existing = await Player.findOne({ id: req.body.id });
-        if (existing) {
-            return res.status(400).json({
-                success: false,
-                error: {
-                    code: "VALIDATION_ERROR",
-                    message: "ID jada existitzen da"
-                }
-            });
+        const playerData = { ...req.body };
+
+        playerData.id = Number(playerData.id);
+        playerData.teamId = Number(playerData.teamId);
+        playerData.leagueId = Number(playerData.leagueId);
+
+        if (playerData.number) {
+            playerData.number = Number(playerData.number);
         }
 
-        const player = await Player.create(req.body);
+
+        if (req.file) {
+            playerData.imageUrl = `/images/players/${req.file.filename}`;
+        }
+
+        const player = await Player.create(playerData);
+
         res.status(201).json({
             success: true,
             data: player,
             message: "Jokalaria arrakastaz sortua"
         });
+
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             success: false,
             error: {
-                code: "INTERNAL_ERROR",
-                message: "Zerbitzariaren errorea"
+                code: "VALIDATION_ERROR",
+                message: "Errorea jokalaria sortzean"
             }
         });
     }
 };
+
 
 // Jokalari bat eguneratu (admin bakarrik)
 // PUT /api/players/:id
@@ -154,9 +161,17 @@ export const updatePlayer = async (req, res) => {
     }
 
     try {
+        // Datuak testutik hartzen ditugu
+        const updateData = { ...req.body };
+
+        // Irudia bidali bada, imageUrl eguneratu
+        if (req.file) {
+            updateData.imageUrl = `/images/players/${req.file.filename}`;
+        }
+
         const player = await Player.findOneAndUpdate(
             { id: req.params.id },
-            req.body,
+            updateData,
             { new: true }
         );
 
@@ -175,6 +190,7 @@ export const updatePlayer = async (req, res) => {
             data: player,
             message: "Jokalaria arrakastaz eguneratua"
         });
+
     } catch (error) {
         res.status(400).json({
             success: false,
@@ -185,6 +201,7 @@ export const updatePlayer = async (req, res) => {
         });
     }
 };
+
 
 // Jokalari bat ezabatzen du (admin bakarrik)
 // DELETE /api/players/:id

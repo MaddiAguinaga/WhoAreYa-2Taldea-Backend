@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Player</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px 30px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .image-preview {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-preview img {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            max-width: 150px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .note {
+            font-size: 13px;
+            color: #666;
+            margin-top: -12px;
+            margin-bottom: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Edit Player</h1>
+
+    <form
+            method="POST"
+            action="/admin/players/edit/<%= player.id %>"
+            enctype="multipart/form-data"
+    >
+
+        <!-- Player ID -->
+        <label>Player ID</label>
+        <input type="number" name="id" value="<%= player.id %>" required>
+
+        <!-- Name -->
+        <label>Name</label>
+        <input type="text" name="name" value="<%= player.name %>" required>
+
+        <!-- Birthdate -->
+        <label>Birthdate</label>
+        <input
+                type="date"
+                name="birthdate"
+                value="<%= player.birthdate ? player.birthdate.split('T')[0] : '' %>"
+                required
+        >
+
+        <!-- Position -->
+        <label>Position</label>
+        <select name="position" required>
+            <option value="GK" <%= player.position === "GK" ? "selected" : "" %>>GK</option>
+            <option value="DF" <%= player.position === "DF" ? "selected" : "" %>>DF</option>
+            <option value="MF" <%= player.position === "MF" ? "selected" : "" %>>MF</option>
+            <option value="FW" <%= player.position === "FW" ? "selected" : "" %>>FW</option>
+        </select>
+
+        <!-- Nationality -->
+        <label>Nationality</label>
+        <input type="text" name="nationality" value="<%= player.nationality %>">
+
+        <!-- Number -->
+        <label>Number</label>
+        <input
+                type="number"
+                name="number"
+                min="1"
+                max="99"
+                value="<%= player.number %>"
+                required
+        >
+
+        <!-- Team ID -->
+        <label>Team ID</label>
+        <input type="number" name="teamId" value="<%= player.teamId %>" required>
+
+        <!-- League ID -->
+        <label>League ID</label>
+        <input type="number" name="leagueId" value="<%= player.leagueId %>" required>
+
+        <!-- Player Image -->
+        <label>Player Image</label>
+        <input type="file" name="image" accept="image/*">
+        <div class="note">Leave empty to keep the current image</div>
+
+        <% if (player.imageUrl) { %>
+            <div class="image-preview">
+                <img src="<%= player.imageUrl %>" alt="Player image">
+            </div>
+        <% } %>
+
+        <div class="actions">
+            <a href="/admin" class="btn btn-secondary">Back</a>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

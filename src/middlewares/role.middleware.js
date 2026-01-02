@@ -8,7 +8,7 @@ export const authorizeAdmin = (req, res, next) => {
 
     if (req.user.role !== "admin") {
         return res.status(403).json({
-            message: "Baimenik ez (admin bakarrik)"
+            message: "Ez duzu baimenik (Admin bakarrik)"
         });
     }
 

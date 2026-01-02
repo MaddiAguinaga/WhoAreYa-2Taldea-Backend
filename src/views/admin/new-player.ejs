@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Player</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px 30px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 18px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .note {
+            font-size: 13px;
+            color: #666;
+            margin-top: -12px;
+            margin-bottom: 18px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Create New Player</h1>
+
+    <form
+            method="POST"
+            action="/admin/players/new"
+            enctype="multipart/form-data"
+    >
+
+        <label>Player ID</label>
+        <input type="number" name="id" required>
+
+        <label>Name</label>
+        <input type="text" name="name" required>
+
+        <label>Birthdate</label>
+        <input type="date" name="birthdate" required>
+
+        <label>Position</label>
+        <select name="position" required>
+            <option value="">-- Select position --</option>
+            <option value="GK">GK</option>
+            <option value="DF">DF</option>
+            <option value="MF">MF</option>
+            <option value="FW">FW</option>
+        </select>
+
+        <label>Nationality</label>
+        <input type="text" name="nationality">
+
+        <label>Number</label>
+        <input type="number" name="number" min="1" max="99" required>
+
+        <label>Team ID</label>
+        <input type="number" name="teamId" required>
+
+        <label>League ID</label>
+        <input type="number" name="leagueId" required>
+
+        <!-- Player Image -->
+        <label>Player Image</label>
+        <input type="file" name="image" accept="image/*">
+        <div class="note">Optional image for the player</div>
+
+        <div class="actions">
+            <a href="/admin" class="btn btn-secondary">Back</a>
+            <button type="submit" class="btn btn-primary">Create player</button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
