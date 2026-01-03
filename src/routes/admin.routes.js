@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        // Create session (IMPORTANT: done here, not via API)
+        // Create session
         req.session.user = {
             id: user._id,
             role: user.role
