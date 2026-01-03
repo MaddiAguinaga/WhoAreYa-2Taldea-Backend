@@ -1,5 +1,5 @@
 // loaders.js - BACKEND BERTSIOA
-export { fetchJSON, fetchPlayer, fetchSolution };
+export { fetchJSON, fetchPlayer, fetchSolution, fetchTeams, fetchLeagues };
 const API_URL = 'http://localhost:3000/api';
 
 async function fetchJSON(what) {
@@ -24,5 +24,15 @@ async function fetchPlayer(playerId) {
 
 async function fetchSolution(gameNumber) {
     const response = await fetch(`${API_URL}/players/solution/${gameNumber}`);
+    return await response.json();
+}
+
+async function fetchTeams() {
+    const response = await fetch(`${API_URL}/teams`);
+    return await response.json();
+}
+
+async function fetchLeagues() {
+    const response = await fetch(`${API_URL}/leagues`);
     return await response.json();
 }

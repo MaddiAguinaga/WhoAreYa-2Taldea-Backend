@@ -147,10 +147,13 @@ let setupRows = function (game) {
             ageDisplay = `${lower} ${guessAge}`;
         }
 
+        let team = game.teams.find(t => t.id === guess.teamId);
+        let league = game.leagues.find(l => l.id === guess.leagueId);
+
         return [
-            `<img src="/images/flags/${guess.nationality}.svg" alt="" style="width: 60%;">`,
-            `<img src="/images/leagues/${leagueToFlag(guess.leagueId)}.png" alt="" style="width: 60%;">`,
-            `<img src="/images/teams/${guess.teamId}.png" alt="" style="width: 60%;">`,
+            `<img src="${guess.flagUrl}" alt="" style="width: 60%;">`,
+            `<img src="${league.imageUrl}" alt="" style="width: 60%;">`,
+            `<img src="${team.logoUrl}" alt="" style="width: 60%;">`,
             `${guess.position}`,
             ageDisplay
         ];
