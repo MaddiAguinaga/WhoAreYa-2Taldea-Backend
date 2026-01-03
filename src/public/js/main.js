@@ -1,5 +1,5 @@
 import { folder, leftArrow } from "./fragments.js";
-import { fetchJSON } from "./loaders.js";
+import { fetchJSON, fetchSolution, fetchPlayer } from "./loaders.js";
 import { setupRows } from "./rows.js";
 import { autocomplete } from "./autocomplete.js";
 
@@ -56,18 +56,23 @@ function getSolution(players, solutionArray, difference_In_Days) {
     return player;
 }
 
-//getSolution funtzioari deia egin
-Promise.all([fetchJSON("./json/fullplayers25.json"), fetchJSON("./json/solution25.json")]).then(
+// Informazioa backend-etik lortu
+Promise.all([
+    fetchJSON('fullplayers25'),        // jokalari guztiak backend-etik lortu
+    fetchSolution(difference_In_Days)  // eguneko jokalaria backend-etik lortu
+]).then(
     (values) => {
 
-        let solution;
+        const [playersResponse, solutionResponse] = values;
 
-        [game.players, solution] = values;
+        // playersResponse --> { success, data, message }
+        game.players = playersResponse.data; //jokalariak
 
-        game.solution = getSolution(game.players, solution, difference_In_Days);
+        // solutionResponse --> { success, data, message }
+        game.solution = solutionResponse.data; // eguneko jokalaria
 
         // irudia eguneratu
-        document.getElementById("mistery").src = `/images/players/${game.solution.id}.png`;
+        document.getElementById("mistery").src = game.solution.imageUrl; //backend-etik hartu jokalariaren irudia
 
         const myInput = document.getElementById("myInput");
         let addRow = setupRows(game);
