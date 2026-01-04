@@ -36,9 +36,10 @@ app.use("/api/auth", authRoutes);
 
 // PLAYERS ROUTES
 //app.use("/api/players", playersRoutes);
-app.use("/players", playersRoutes);
+app.use("/api/players", playersRoutes);
 
 // TEAMS ROUTES
+//app.use("/api/teams", teamsRoutes);
 app.use("/api/teams", teamsRoutes);
 
 // LEAGUES ROUTES

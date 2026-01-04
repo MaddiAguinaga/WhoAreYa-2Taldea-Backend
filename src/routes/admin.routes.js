@@ -148,7 +148,6 @@ router.post(
             for (const key in req.body) {
                 formData.append(key, req.body[key]);
             }
-
             // Image
             if (req.file) {
                 formData.append(

@@ -46,7 +46,7 @@ const playerSchema = new mongoose.Schema({
     },
     flagUrl: {
         type: String,
-        required: true
+        required: false
     }
 });
 
