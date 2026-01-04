@@ -35,7 +35,8 @@ app.set("views", path.join(process.cwd(), "src", "views"));
 app.use("/api/auth", authRoutes);
 
 // PLAYERS ROUTES
-app.use("/api/players", playersRoutes);
+//app.use("/api/players", playersRoutes);
+app.use("/players", playersRoutes);
 
 // TEAMS ROUTES
 app.use("/api/teams", teamsRoutes);

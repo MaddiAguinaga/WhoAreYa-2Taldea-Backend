@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= player.name %></title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 6px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .player-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .player-info p {
+            margin: 0;
+        }
+
+        img {
+            margin-top: 20px;
+            max-width: 200px;
+            border-radius: 6px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1><%= player.name %></h1>
+
+    <div class="player-info">
+        <p><strong>ID:</strong> <%= player.id %></p>
+
+        <p><strong>Birthdate:</strong>
+            <%= player.birthdate
+                    ? new Date(player.birthdate).toISOString().split("T")[0]
+                    : "-" %>
+        </p>
+
+        <p><strong>Nationality:</strong> <%= player.nationality || "-" %></p>
+        <p><strong>Position:</strong> <%= player.position %></p>
+        <p><strong>Number:</strong> <%= player.number ?? "-" %></p>
+        <p><strong>Team ID:</strong> <%= player.teamId %></p>
+        <p><strong>League ID:</strong> <%= player.leagueId %></p>
+    </div>
+
+    <% if (player.imageUrl) { %>
+        <img src="<%= player.imageUrl %>" alt="Player image">
+    <% } %>
+
+    <br>
+    <a class="back" href="/players">← Back to players</a>
+
+</div>
+
+</body>
+</html>

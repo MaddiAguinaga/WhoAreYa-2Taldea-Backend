@@ -22,9 +22,13 @@ const router = express.Router();
 router.get("/solution/:gameNumber", getDailySolution);
 
 // GET /api/players
+//router.get("/", getPlayers);
+// GET /players
 router.get("/", getPlayers);
 
 // GET /api/players/:id
+//router.get("/:id", getPlayerById);
+// GET players/:id
 router.get("/:id", getPlayerById);
 
 /* ========= WRITE (ADMIN) ========= */

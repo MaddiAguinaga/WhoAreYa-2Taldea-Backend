@@ -17,6 +17,7 @@ HTTP Codes:
 // GET /api/players?page=1&limit=10
 // query params-en page eta limit badaude --> Orrialde-banaketa [6.1]
 // Jokalari guztiak zerrendatzen dira, orrialde-banaketarekin
+/*
 export const getPlayers = async (req, res) => {
     try {
 
@@ -61,9 +62,25 @@ export const getPlayers = async (req, res) => {
         });
     }
 };
+*/
+// GET /players
+export const getPlayers = async (req, res) => {
+    try {
+        const players = await Player.find();
 
+        // Render HTML view (NO JSON)
+        res.render("normalUser/show-players", {
+            players
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error loading players");
+    }
+};
 // IDaren arabera, jokalari espezifiko bat lortu
 // GET /api/players/:id
+/*
 export const getPlayerById = async (req, res) => {
     try {
         const player = await Player.findOne({ id: req.params.id });
@@ -93,7 +110,23 @@ export const getPlayerById = async (req, res) => {
         });
     }
 };
+*/
+export const getPlayerById = async (req, res) => {
+    try {
+        const player = await Player.findOne({ id: req.params.id });
 
+        if (!player) {
+            return res.status(404).send("Player not found");
+        }
+
+        res.render("normalUser/show-oneplayer", {
+            player
+        });
+
+    } catch (error) {
+        res.status(500).send("Server error");
+    }
+};
 // Jokalari berri bat sortu (admin bakarrik)
 // POST /api/players
 export const createPlayer = async (req, res) => {

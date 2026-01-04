@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Players</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eee;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        img {
+            max-width: 60px;
+            border-radius: 4px;
+        }
+
+        .empty {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Players</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Birthdate</th>
+        <th>Nationality</th>
+        <th>Position</th>
+        <th>Number</th>
+        <th>Team ID</th>
+        <th>League ID</th>
+        <th>Image</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% if (!players || players.length === 0) { %>
+        <tr>
+            <td colspan="9" class="empty">No players found</td>
+        </tr>
+    <% } else { %>
+        <% players.forEach(player => { %>
+            <tr>
+                <td><%= player.id %></td>
+                <td><%= player.name %></td>
+                <td>
+                    <%= player.birthdate
+                            ? new Date(player.birthdate).toISOString().split("T")[0]
+                            : "-" %>
+                </td>
+                <td><%= player.nationality || "-" %></td>
+                <td><%= player.position %></td>
+                <td><%= player.number ?? "-" %></td>
+                <td><%= player.teamId %></td>
+                <td><%= player.leagueId %></td>
+                <td>
+                    <% if (player.imageUrl) { %>
+                        <img src="<%= player.imageUrl %>" alt="Player image">
+                    <% } else { %>
+                        -
+                    <% } %>
+                </td>
+            </tr>
+        <% }) %>
+    <% } %>
+    </tbody>
+</table>
+
+</body>
+</html>
