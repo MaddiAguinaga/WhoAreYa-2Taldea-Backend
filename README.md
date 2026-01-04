@@ -34,8 +34,22 @@ WhoAreYa-2Taldea-Backend/
     ├── server.js 
     ├── config/ 
     ├── models/ 
+        └──League.js
+        └──Team.js
+        └──Player.js
+        └──User.js
     ├── controllers/ 
+        └──auth.controller.js
+        └──players.controller.js
+        └──teams.controller.js
+        └──leagues.controller.js
     ├── routes/ 
+        └── api/ 
+            └── auth.routes.js
+            └── players.routes.js
+            └── teams.routes.js
+            └── leagues.routes.js
+        └── admin.routes.js          
     ├── middlewares/ 
     ├── public/ 
         └── images/
@@ -74,6 +88,5 @@ Une honetan, honako ibilbideak daude erabilgarri:
 | PUT     | /admin/players/edit/:id   | Jokalari baten datu guztiak eguneratzea                                                                                         | Admin          |
 | DELETE  | /admin/players/delete/:id | Jokalari bat ezabatzen du "Delete" botoia sakatuz                                                                               | Admin          |
 
-
-Hartutako erabakiek proiektuaren hurrengo mugarriak modu egituratuan garatzeko oinarri sendoa ezartzen dute.
-
+### Milestone 5-ren  erabakia: Ikuspegi tradizionala jarraitu
+Milestone honetarako ikuspegi tradizionala hautatu da. Ikuspegi honetan, Express zerbitzaria HTML formularioen eta REST APIaren arteko bitartekari gisa erabiltzen da, EJS txantiloiak erabiliz interfazea sortzeko. Ikuspegi hau aukeratu da sinplea, ulerterraza eta koherentea delako, eta gainera aurreko erabakiekin bat datorrelako. Metodo tradizionalak datuen fluxu argia eskaintzen du: erabiltzaileak ekintza bat egiten du interfazetik, Express-ek eskaera jasotzen du eta ondoren REST APIari delegatzen dio eragiketa, honek balidazioa eta datu-basearekiko interakzioa kudeatuz.
