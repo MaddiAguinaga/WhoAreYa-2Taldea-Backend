@@ -55,20 +55,24 @@ Konfigurazio zentralizatua hautatu da, ingurune-aldagaiak `.env` fitxategitik ka
 Aplikazioaren ibilbide nagusiak dagoeneko inplementatuta daude, APIaren egitura argi eta koherente bat eskainiz. Ibilbide hauek proiektuaren egungo egoera islatzen dute, eta REST arkitekturaren printzipioak jarraituz antolatu dira. Hiru maila nagusi bereizten dira: /api/* API RESTerako, JSON bidezko komunikazioa erabiliz; /admin/* administrazio-panelerako, admin rola duten erabiltzaileentzat soilik eskuragarria; eta /, jokoaren atal publikorako. Egitura honek aplikazioaren funtzionaltasun nagusiak bereiztea ahalbidetzen du, segurtasuna eta mantentze-lanak erraztuz.
 Une honetan, honako ibilbideak daude erabilgarri:
 
-| Mota | Metodoa | Endpoint                  | Deskribapena                                                                                                             | Baimena  |
-|------|---------|---------------------------|--------------------------------------------------------------------------------------------------------------------------| -------- |
-| API  | GET     | /api/players              | Jokalarien zerrenda lortzea (Query params gabe auto-osaketarako. Query params-en page eta limit badaude orrialde-banaketa egin) | Publikoa |
-| API  | GET     | /api/players/:id          | IDaren araberako jokalari baten informazioa lortzea                                                                      | Publikoa |
-| API  | POST    | /api/players              | Jokalari berri bat sortzea                                                                                               | Admin    |
-| API  | PUT     | /api/players/:id          | Jokalari baten datu guztiak eguneratzea                                                                                  | Admin    |
-| API  | DELETE  | /api/players/:id          | Jokalari bat ezabatzea                                                                                                   | Admin    |
-| API  | GET     | /api/teams                | Talde guztiak lortzea                                                                                                    | Publikoa |
-| API  | GET     | /api/leagues              | Liga guztiak lortzea                                                                                                     | Publikoa |
-| API  | GET     | /api/solution/:gameNumber | Eguneko jokalaria lortu                                                                                                                         |          |
-| API  | POST    | /api/auth/login           | Erabiltzailearen saioa hastea                                                                                            | Publikoa |
-| API  | POST    | /api/auth/register        | Erabiltzaile berria sortzea                                                                                              | Publikoa |
-| WEB  | GET     | /admin                    | Administrazio-panela                                                                                                     | Admin    |
-| WEB  | GET     | /                         | Jokoaren hasierako orria                                                                                                 | Publikoa |
+| Metodoa | Endpoint                  | Deskribapena                                                                                                                    | Baimena        |
+|---------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------|----------------|
+| GET     | /                         | Jokoaren hasierako orria                                                                                                        | Publikoa       |                                                                                                                                                 |          |
+| GET     | /api/players              | Jokalarien zerrenda lortzea (Query params gabe auto-osaketarako. Query params-en page eta limit badaude orrialde-banaketa egin) | Publikoa       |
+| GET     | /api/players/:id          | IDaren araberako jokalari baten informazioa lortzea                                                                             | Publikoa       |
+| GET     | /api/teams                | Talde guztiak lortu                                                                                                             | Publikoa       |
+| GET     | /api/leagues              | Liga guztiak lortu                                                                                                              | Publikoa       |
+| GET     | /api/solution/:gameNumber | Eguneko jokalaria lortu                                                                                                         | Publikoa       |
+| POST    | /api/auth/login           | Erabiltzailearen saioa hastea (curl bidez egin behar da)                                                                        | Publikoa       |
+| POST    | /api/auth/register        | Erabiltzaile berria sortzea  (curl bidez egin behar da)                                                                         | Publikoa       |
+| GET     | /admin                    | Jokalari guztien zerrenda erakutsi (Erabiltzailea autentifikatua badago eta Admin rola badu)                                    | Admin          |
+| GET     | /admin/login              | Admin erabiltzaileak sartzeko formularioa erakutsi                                                                              | Publikoa       |
+| POST    | /admin/login              | Admin erabiltzaileak sartzeko formularioaren datuak jaso                                                                        | Publikoa       |
+| GET     | /admin/players/new        | Jokalari berri bat sortzeko formularioa                                                                                         | Admin          |
+| POST    | /admin/players/new        | Jokalari berri bat sortzen du                                                                                                   | Admin          |
+| GET     | /admin/players/edit/:id   | Jokalaria editatzeko formularioa erakutsi                                                                                       | Admin          |
+| PUT     | /admin/players/edit/:id   | Jokalari baten datu guztiak eguneratzea                                                                                         | Admin          |
+| DELETE  | /admin/players/delete/:id | Jokalari bat ezabatzen du "Delete" botoia sakatuz                                                                               | Admin          |
 
 
 Hartutako erabakiek proiektuaren hurrengo mugarriak modu egituratuan garatzeko oinarri sendoa ezartzen dute.
