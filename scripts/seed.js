@@ -50,6 +50,7 @@ const seedDatabase = async () => {
         playersData.forEach(p => {
             // jokalariaren irudiaren url-a
             p.imageUrl = `/images/players/${p.id}.png`;
+            p.flagUrl = `/images/flags/${p.nationality}.svg`;
         });
         await Player.insertMany(playersData);
         console.log(`${playersData.length} jokalari sartu dira.`);
@@ -74,11 +75,11 @@ const seedDatabase = async () => {
 
         // leagueId → ligari buruzko informazio osoa
         const leagueInfoMap = {
-            564: { name: "La Liga", flag: "/images/flags/es1.svg", country: "Spain", code: "ESP" },
-            8:   { name: "Premier League", flag: "/images/flags/en1.svg", country: "England", code: "ENG" },
-            82:  { name: "Bundesliga", flag: "/images/flags/de1.svg", country: "Germany", code: "GER" },
-            384: { name: "Serie A", flag: "/images/flags/it1.svg", country: "Italy", code: "ITA" },
-            301: { name: "Ligue 1", flag: "/images/flags/fr1.svg", country: "France", code: "FRA" }
+            564: { name: "La Liga", flag: "/images/leagues/es1.png", country: "Spain", code: "ESP" },
+            8:   { name: "Premier League", flag: "/images/leagues/en1.png", country: "England", code: "ENG" },
+            82:  { name: "Bundesliga", flag: "/images/leagues/de1.png", country: "Germany", code: "GER" },
+            384: { name: "Serie A", flag: "/images/leagues/it1.png", country: "Italy", code: "ITA" },
+            301: { name: "Ligue 1", flag: "/images/leagues/fr1.png", country: "France", code: "FRA" }
         };
 
         // Ligak sortu
@@ -87,7 +88,7 @@ const seedDatabase = async () => {
             if (!leagueMap.has(p.leagueId)) {
                 const info = leagueInfoMap[p.leagueId] || {
                     name: `League ${p.leagueId}`,
-                    flag: "/images/flags/unknown.svg",
+                    image: "/images/leagues/unknown.svg",
                     country: "Unknown",
                     code: "UNK"
                 };
@@ -96,7 +97,7 @@ const seedDatabase = async () => {
                     name: info.name,
                     code: info.code,
                     country: info.country,
-                    flagUrl: info.flag
+                    imageUrl: info.flag
                 });
             }
         });

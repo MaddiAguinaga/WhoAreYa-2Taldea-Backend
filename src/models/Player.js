@@ -41,7 +41,12 @@ const playerSchema = new mongoose.Schema({
         max: 99
     },
     imageUrl: {
-        type: String
+        type: String,
+        required: true
+    },
+    flagUrl: {
+        type: String,
+        required: true
     }
 });
 

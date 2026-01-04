@@ -40,7 +40,9 @@ function autocomplete(inp, game) {
 
             b = document.createElement("DIV");
             b.classList.add('flex', 'items-start', 'gap-x-3', 'leading-tight', 'uppercase', 'text-sm');
-            b.innerHTML = `<img src="/images/teams/${p.teamId}.png"  width="28" height="28">`;
+
+            let team = game.teams.find(t => t.id === p.teamId);
+            b.innerHTML = `<img src="${team.logoUrl}" width="28" height="28">`;
 
             // Bilatutako zatia non dagoen kalkulatu
             const idx = p.name.toLowerCase().indexOf(val.toLowerCase());

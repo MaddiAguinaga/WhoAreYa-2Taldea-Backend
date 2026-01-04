@@ -1,5 +1,5 @@
 import { folder, leftArrow } from "./fragments.js";
-import { fetchJSON, fetchSolution, fetchPlayer } from "./loaders.js";
+import { fetchJSON, fetchSolution, fetchTeams, fetchLeagues } from "./loaders.js";
 import { setupRows } from "./rows.js";
 import { autocomplete } from "./autocomplete.js";
 
@@ -59,17 +59,23 @@ function getSolution(players, solutionArray, difference_In_Days) {
 // Informazioa backend-etik lortu
 Promise.all([
     fetchJSON('fullplayers25'),        // jokalari guztiak backend-etik lortu
-    fetchSolution(difference_In_Days)  // eguneko jokalaria backend-etik lortu
+    fetchSolution(difference_In_Days),  // eguneko jokalaria backend-etik lortu
+    fetchTeams(),
+    fetchLeagues()
 ]).then(
     (values) => {
 
-        const [playersResponse, solutionResponse] = values;
+        const [playersResponse, solutionResponse, teamsResponse, leaguesResponse] = values;
 
         // playersResponse --> { success, data, message }
-        game.players = playersResponse.data; //jokalariak
+        game.players = playersResponse.data; // jokalariak
 
         // solutionResponse --> { success, data, message }
         game.solution = solutionResponse.data; // eguneko jokalaria
+
+        game.teams = teamsResponse.data; // taldeak
+
+        game.leagues = leaguesResponse.data; // ligak
 
         // irudia eguneratu
         document.getElementById("mistery").src = game.solution.imageUrl; //backend-etik hartu jokalariaren irudia

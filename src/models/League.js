@@ -24,7 +24,7 @@ const leagueSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 100
     },
-    flagUrl: {
+    imageUrl: {
         type: String,
         required: true
     }
