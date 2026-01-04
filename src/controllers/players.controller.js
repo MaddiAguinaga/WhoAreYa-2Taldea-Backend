@@ -126,7 +126,7 @@ export const createPlayer = async (req, res) => {
             playerData.imageUrl = `/images/players/${req.file.filename}`;
         }
 
-        playerData.flagUrl = `/images/flags/${playerData.nationality}.svg`;
+        // playerData.flagUrl = `/images/flags/${playerData.nationality}.svg`;
 
         const player = await Player.create(playerData);
 
