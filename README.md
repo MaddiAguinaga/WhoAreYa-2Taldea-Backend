@@ -90,3 +90,6 @@ Une honetan, honako ibilbideak daude erabilgarri:
 
 ### Milestone 5-ren  erabakia: Ikuspegi tradizionala jarraitu
 Milestone honetarako ikuspegi tradizionala hautatu da. Ikuspegi honetan, Express zerbitzaria HTML formularioen eta REST APIaren arteko bitartekari gisa erabiltzen da, EJS txantiloiak erabiliz interfazea sortzeko. Ikuspegi hau aukeratu da sinplea, ulerterraza eta koherentea delako, eta gainera aurreko erabakiekin bat datorrelako. Metodo tradizionalak datuen fluxu argia eskaintzen du: erabiltzaileak ekintza bat egiten du interfazetik, Express-ek eskaera jasotzen du eta ondoren REST APIari delegatzen dio eragiketa, honek balidazioa eta datu-basearekiko interakzioa kudeatuz.
+
+### Test automatikoak
+Test automatikoak garatu dira sistemako funtzionalitate desberdinak behar bezala funtzionatzen dutela ziurtatzeko. Horien bidez, bai barne-logikaren zuzentasuna egiaztatu da, bai APIarekiko konexioa eta CRUD eragiketetarako baimenak behar bezala kudeatzen direla bermatu da.
